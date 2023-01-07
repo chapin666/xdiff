@@ -99,7 +99,9 @@ async fn parse(output: &mut Vec<String>) -> Result<()> {
 }
 
 async fn run(output: &mut Vec<String>, args: RunArgs) -> Result<()> {
-    let config_file = args.config.unwrap_or(get_default_config("xdiff.yml")?);
+    let config_file = args
+        .config
+        .unwrap_or_else(|| get_default_config("xdiff.yml").unwrap());
     let diff_config = DiffConfig::try_load(&config_file).await?;
 
     let mut config = diff_config.get(&args.profile)?.clone();

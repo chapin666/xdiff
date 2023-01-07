@@ -99,7 +99,9 @@ fn parse(output: &mut Vec<String>, ParseArgs { profile, url }: ParseArgs) -> Res
 }
 
 async fn run(output: &mut Vec<String>, args: RunArgs) -> Result<()> {
-    let config_file = args.config.unwrap_or(get_default_config("xreq.yml")?);
+    let config_file = args
+        .config
+        .unwrap_or_else(|| get_default_config("xreq.yml").unwrap());
 
     let request_config = RequestConfig::try_load(&config_file).await?;
 
